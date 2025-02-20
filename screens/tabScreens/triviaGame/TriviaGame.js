@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { useFocusEffect } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
@@ -40,24 +40,32 @@ const TriviaGame = ({ navigation }) => {
   const [lastTiltDirection, setLastTiltDirection] = useState(null);
   const [fontLoaded, setFontLoaded] = useState(false);
 
-  // Turn Drawer Header Transparent
-  useEffect(() => {
-    navigation.getParent()?.setOptions({
-      headerStyle: {
-        backgroundColor: "transparent",
-        elevation: 0,
-        shadowOpacity: 0,
-      },
-      headerTransparent: true, // This ensures the header is truly transparent
-    });
+  // Turn Drawer Header Color To Component Background Color
+  useFocusEffect(
+    React.useCallback(() => {
+      // When screen is focused, set the header color
+      const parent = navigation.getParent();
+      if (parent) {
+        parent.setOptions({
+          headerStyle: {
+            backgroundColor: "#b2b2b2",
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        });
+      }
 
-    return () => {
-      navigation.getParent()?.setOptions({
-        headerStyle: { backgroundColor: "#fff" },
-        headerTransparent: false,
-      });
-    };
-  }, [navigation]);
+      // When screen loses focus, reset the header color
+      return () => {
+        const parent = navigation.getParent();
+        if (parent) {
+          parent.setOptions({
+            headerStyle: { backgroundColor: "#ffffff" },
+          });
+        }
+      };
+    }, [navigation])
+  );
 
   // Load the custom font
   useEffect(() => {
@@ -203,14 +211,13 @@ const TriviaGame = ({ navigation }) => {
         { backgroundColor: tiltBackground || "#B2B2B2" },
       ]}
     >
-      {/* HEADER */}
+      {/* HEADER with Safe Area Padding */}
       <View style={styles.header}>
         <Text style={styles.headerText}>
           Score: {score} / {totalAttempts}
         </Text>
         <Text style={styles.headerHeart}>{renderLives()}</Text>
       </View>
-
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Compile & Conquer</Text>
       </View>
@@ -371,7 +378,6 @@ const TriviaGame = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
   },
   loadingContainer: {
     flex: 1,
@@ -384,7 +390,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignContent: "center",
     margin: 20,
-    marginTop: Platform.OS === "android" ? 50 : 45,
     borderTopWidth: 1,
     borderTopColor: "#000000",
     borderBottomWidth: 1,
@@ -405,7 +410,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontFamily: "Orbitron", // Custom font applied
+    fontFamily: "Orbitron",
     fontSize: 18,
     color: "#333",
   },
@@ -413,16 +418,16 @@ const styles = StyleSheet.create({
   questionContainer: {
     flex: 1,
     justifyContent: "flex-start",
-    marginTop: Platform.OS === "android" ? 160 : 200,
+    marginTop: 180,
   },
   questionText: {
     fontFamily: "ChakraPetchMedium",
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: "500",
     textAlign: "center",
-    margin: 30,
+    margin: 20,
     marginTop: 10,
-    marginBottom: 40,
+    marginBottom: 20,
     color: "#333",
   },
   answersContainer: {
@@ -500,7 +505,7 @@ const styles = StyleSheet.create({
   // FEEDBACK TEXT //
   feedbackContainer: {
     position: "absolute",
-    top: 650,
+    bottom: 250,
     left: 0,
     right: 0,
     alignItems: "center",
@@ -522,7 +527,6 @@ const styles = StyleSheet.create({
   bottomContainer: {
     alignItems: "center",
     marginBottom: 60,
-    marginBottom: Platform.OS === "android" ? 40 : 60,
   },
   resetButton: {
     backgroundColor: "#",
