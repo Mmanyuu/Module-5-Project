@@ -13,7 +13,7 @@ import SampleTabScreen from "./screens/tabScreens/SampleTabScreen";
 import SampleProfile from "./screens/drawerScreens/SampleProfile";
 import TriviaGame from "./screens/tabScreens/triviaGame/TriviaGame";
 import CalendarScreen from "./screens/tabScreens/CalendarScreen";
-
+import CompassScreen from "./screens/tabScreens/CompassScreen";
 // CREATE TAB NAVIGATION
 const Tab = createBottomTabNavigator();
 
@@ -39,7 +39,7 @@ const TabNavigator = () => {
       <Tab.Screen name="Bindu" component={SampleTabScreen} />
       <Tab.Screen name="Johnny" component={CalendarScreen} />
       <Tab.Screen name="Joseph" component={SampleTabScreen} />
-      <Tab.Screen name="Manyu" component={SampleTabScreen} />
+      <Tab.Screen name="Manyu" component={CompassScreen} />
       <Tab.Screen
         style={styles.tabIconTrivia}
         name="Quiz"
