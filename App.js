@@ -17,6 +17,8 @@ import TriviaGame from "./screens/tabScreens/triviaGame/TriviaGame";
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
+  const transparentScreens = ["Quiz"];
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -24,9 +26,9 @@ const TabNavigator = () => {
         tabBarInactiveTintColor: "gray",
         headerShown: false, // HIDE DEFAULT TAB HEADER
         tabBarStyle: {
-          backgroundColor:
-            // Set bottom tab navigator to transparent when in Quiz tab
-            route.name === "Quiz" ? "transparent" : "#ffffff",
+          backgroundColor: transparentScreens.includes(route.name)
+            ? "transparent"
+            : "#ffffff", // Transparent for specific screens, white for others
           position: "absolute",
           elevation: 0, // Remove shadow on Android
           shadowOpacity: 0, // Remove shadow on iOS
