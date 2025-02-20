@@ -9,6 +9,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import SampleTabScreen from "./screens/tabScreens/SampleTabScreen";
 import SampleProfile from "./screens/drawerScreens/SampleProfile";
+import CalendarScreen from "./screens/tabScreens/CalendarScreen";
 
 // CREATE TAB NAVIGATION
 const Tab = createBottomTabNavigator();
@@ -23,7 +24,7 @@ const TabNavigator = () => {
       })}
     >
       <Tab.Screen name="Bindu" component={SampleTabScreen} />
-      <Tab.Screen name="Johnny" component={SampleTabScreen} />
+      <Tab.Screen name="Johnny" component={CalendarScreen} />
       <Tab.Screen name="Joseph" component={SampleTabScreen} />
       <Tab.Screen name="Manyu" component={SampleTabScreen} />
       <Tab.Screen name="Andrew" component={SampleTabScreen} />
