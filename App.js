@@ -1,9 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
-  NavigationContainer,
-  useNavigation,
-} from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
 import styles from "./styles/styles";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -51,7 +49,6 @@ const TabNavigator = () => {
           },
         }}
       />
-      <Tab.Screen name="Johnny" component={SampleTabScreen} />
       <Tab.Screen name="Bindu" component={SampleTabScreen} />
       <Tab.Screen name="Johnny" component={CalendarScreen} />
       <Tab.Screen name="Joseph" component={SampleTabScreen} />
