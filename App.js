@@ -5,10 +5,13 @@ import {
   NavigationContainer,
   useNavigation,
 } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
+import styles from "./styles/styles";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import SampleTabScreen from "./screens/tabScreens/SampleTabScreen";
 import SampleProfile from "./screens/drawerScreens/SampleProfile";
+import TriviaGame from "./screens/tabScreens/triviaGame/TriviaGame";
 
 // CREATE TAB NAVIGATION
 const Tab = createBottomTabNavigator();
@@ -20,13 +23,25 @@ const TabNavigator = () => {
         tabBarActiveTintColor: "blue",
         tabBarInactiveTintColor: "gray",
         headerShown: false, // HIDE DEFAULT TAB HEADER
+        tabBarStyle: {
+          backgroundColor:
+            // Set bottom tab navigator to transparent when in Quiz tab
+            route.name === "Quiz" ? "transparent" : "#ffffff",
+          position: "absolute",
+          elevation: 0, // Remove shadow on Android
+          shadowOpacity: 0, // Remove shadow on iOS
+        },
       })}
     >
       <Tab.Screen name="Bindu" component={SampleTabScreen} />
       <Tab.Screen name="Johnny" component={SampleTabScreen} />
       <Tab.Screen name="Joseph" component={SampleTabScreen} />
       <Tab.Screen name="Manyu" component={SampleTabScreen} />
-      <Tab.Screen name="Andrew" component={SampleTabScreen} />
+      <Tab.Screen
+        style={styles.tabIconTrivia}
+        name="Quiz"
+        component={TriviaGame}
+      />
     </Tab.Navigator>
   );
 };
