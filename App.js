@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
-import {
   NavigationContainer,
   useNavigation,
 } from "@react-navigation/native";
@@ -11,6 +10,11 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import SampleTabScreen from "./screens/tabScreens/SampleTabScreen";
 import SampleProfile from "./screens/drawerScreens/SampleProfile";
+import CameraHomeScreen from "./screens/tabScreens/CameraHomeScreen";
+import CameraScreen from "./screens/tabScreens/CameraScreen";
+import CameraProfileScreen from "./screens/tabScreens/CameraProfileScreen";
+import Fontisto from "@expo/vector-icons/Fontisto";
+import Moments from "./screens/drawerScreens/Moments";
 import TriviaGame from "./screens/tabScreens/triviaGame/TriviaGame";
 import CalendarScreen from "./screens/tabScreens/CalendarScreen";
 import CompassScreen from "./screens/tabScreens/CompassScreen";
@@ -36,6 +40,18 @@ const TabNavigator = () => {
         },
       })}
     >
+      <Tab.Screen
+        name="Moments"
+        component={CameraHomeScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => {
+            return (
+              <Fontisto name="photograph" size={size} color={color}></Fontisto>
+            );
+          },
+        }}
+      />
+      <Tab.Screen name="Johnny" component={SampleTabScreen} />
       <Tab.Screen name="Bindu" component={SampleTabScreen} />
       <Tab.Screen name="Johnny" component={CalendarScreen} />
       <Tab.Screen name="Joseph" component={SampleTabScreen} />
@@ -59,28 +75,18 @@ const DrawerNavigator = () => {
         name="Module 5 Project"
         options={{
           drawerIcon: ({ focused, color, size }) => (
-            <MaterialCommunityIcons
-              name="menu"
-              size={size}
-              color={color}
-            />
+            <MaterialCommunityIcons name="menu" size={size} color={color} />
           ),
         }}
       >
         {(props) => <TabNavigator {...props} />}
       </Drawer.Screen>
       <Drawer.Screen
-        name="Bindu"
-        component={SampleProfile}
+        name="Moments "
+        component={Moments}
         options={{
           drawerIcon: ({ focused, color, size }) => {
-            return (
-              <MaterialIcons
-                name="article"
-                size={size}
-                color={color}
-              />
-            );
+            return <Fontisto name="photograph" size={size} color={color} />;
           },
         }}
       />
@@ -89,13 +95,7 @@ const DrawerNavigator = () => {
         component={SampleProfile}
         options={{
           drawerIcon: ({ focused, color, size }) => {
-            return (
-              <MaterialIcons
-                name="article"
-                size={size}
-                color={color}
-              />
-            );
+            return <MaterialIcons name="article" size={size} color={color} />;
           },
         }}
       />
@@ -104,13 +104,7 @@ const DrawerNavigator = () => {
         component={SampleProfile}
         options={{
           drawerIcon: ({ focused, color, size }) => {
-            return (
-              <MaterialIcons
-                name="article"
-                size={size}
-                color={color}
-              />
-            );
+            return <MaterialIcons name="article" size={size} color={color} />;
           },
         }}
       />
@@ -119,13 +113,7 @@ const DrawerNavigator = () => {
         component={SampleProfile}
         options={{
           drawerIcon: ({ focused, color, size }) => {
-            return (
-              <MaterialIcons
-                name="article"
-                size={size}
-                color={color}
-              />
-            );
+            return <MaterialIcons name="article" size={size} color={color} />;
           },
         }}
       />
@@ -134,13 +122,7 @@ const DrawerNavigator = () => {
         component={SampleProfile}
         options={{
           drawerIcon: ({ focused, color, size }) => {
-            return (
-              <MaterialIcons
-                name="article"
-                size={size}
-                color={color}
-              />
-            );
+            return <MaterialIcons name="article" size={size} color={color} />;
           },
         }}
       />
@@ -160,6 +142,16 @@ export default function App() {
           component={DrawerNavigator}
           options={{ headerShown: false }} // HIDE DEFAULT STACK HEADER
         />
+        {/* Added by Bindu for the camera app Stack navigation */}
+        <Stack.Screen
+          name="CameraHome"
+          component={CameraHomeScreen}
+        ></Stack.Screen>
+        <Stack.Screen name="Camera" component={CameraScreen}></Stack.Screen>
+        <Stack.Screen
+          name="CameraProfile"
+          component={CameraProfileScreen}
+        ></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
