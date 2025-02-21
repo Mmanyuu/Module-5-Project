@@ -2,8 +2,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { useFocusEffect } from "@react-navigation/native";
 import styles from "./styles/styles";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import SampleTabScreen from "./screens/tabScreens/SampleTabScreen";
@@ -207,7 +207,11 @@ const DrawerNavigator = () => {
         component={AndrewProfile}
         options={{
           drawerIcon: ({ focused, color, size }) => (
-            <MaterialIcons name="article" size={size} color={color} />
+            <FontAwesome
+              name="user-secret"
+              size={size}
+              color={color}
+            />
           ),
           headerStyle: {
             backgroundColor: "#B2B2B2",
