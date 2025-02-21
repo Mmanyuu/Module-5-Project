@@ -17,6 +17,7 @@ import TriviaGame from "./screens/tabScreens/triviaGame/TriviaGame";
 import CalendarScreen from "./screens/tabScreens/CalendarScreen";
 import CompassScreen from "./screens/tabScreens/CompassScreen";
 import AndrewProfile from "./screens/drawerScreens/AndrewProfile";
+import JohnnyProfile from "./screens/drawerScreens/JohnnyProfile";
 
 // CREATE TAB NAVIGATION
 const Tab = createBottomTabNavigator();
@@ -159,7 +160,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name="Johnny"
-        component={SampleProfile}
+        component={JohnnyProfile}
         options={{
           drawerIcon: ({ focused, color }) => {
             return (
