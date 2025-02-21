@@ -2,8 +2,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { useFocusEffect } from "@react-navigation/native";
 import styles from "./styles/styles";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import SampleTabScreen from "./screens/tabScreens/SampleTabScreen";
@@ -16,18 +16,21 @@ import Moments from "./screens/drawerScreens/Moments";
 import TriviaGame from "./screens/tabScreens/triviaGame/TriviaGame";
 import CalendarScreen from "./screens/tabScreens/CalendarScreen";
 import CompassScreen from "./screens/tabScreens/CompassScreen";
+import AndrewProfile from "./screens/drawerScreens/AndrewProfile";
+
 // CREATE TAB NAVIGATION
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
   const transparentScreens = ["Quiz"];
+  const iconSize = 20;
 
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarActiveTintColor: "blue",
         tabBarInactiveTintColor: "gray",
-        headerShown: false, // HIDE DEFAULT TAB HEADER
+        headerShown: false, // Hide default tab navigation header
         tabBarStyle: {
           backgroundColor: transparentScreens.includes(route.name)
             ? "transparent"
@@ -42,45 +45,74 @@ const TabNavigator = () => {
         name="Moments"
         component={CameraHomeScreen}
         options={{
-          tabBarIcon: ({ color, size }) => {
+          tabBarIcon: ({ color }) => {
             return (
-              <Fontisto name="photograph" size={size} color={color}></Fontisto>
+              <Fontisto
+                name="photograph"
+                size={iconSize}
+                color={color}
+              ></Fontisto>
             );
           },
         }}
       />
-      <Tab.Screen name="Calendar" component={CalendarScreen} 
+      <Tab.Screen
+        name="Calendar"
+        component={CalendarScreen}
         options={{
-          tabBarIcon: ({ color, size }) => {
+          tabBarIcon: ({ color }) => {
             return (
-              <Fontisto name="calendar" size={size} color={color}></Fontisto>
+              <Fontisto
+                name="calendar"
+                size={iconSize}
+                color={color}
+              ></Fontisto>
             );
           },
-        }}/>
-      <Tab.Screen name="Task" component={SampleTabScreen}
+        }}
+      />
+      <Tab.Screen
+        name="Task"
+        component={SampleTabScreen}
         options={{
-          tabBarIcon: ({ color, size }) => {
+          tabBarIcon: ({ color }) => {
             return (
-              <MaterialIcons name="add-task" size={size} color={color}></MaterialIcons>
+              <MaterialIcons
+                name="add-task"
+                size={iconSize}
+                color={color}
+              ></MaterialIcons>
             );
           },
-        }} />
-      <Tab.Screen name="Compass" component={CompassScreen}
+        }}
+      />
+      <Tab.Screen
+        name="Compass"
+        component={CompassScreen}
         options={{
-          tabBarIcon: ({ color, size }) => {
+          tabBarIcon: ({ color }) => {
             return (
-              <Fontisto name="compass-alt" size={size} color={color}></Fontisto>
+              <Fontisto
+                name="compass-alt"
+                size={iconSize}
+                color={color}
+              ></Fontisto>
             );
           },
-        }} />
+        }}
+      />
       <Tab.Screen
         style={styles.tabIconTrivia}
         name="Quiz"
         component={TriviaGame}
         options={{
-          tabBarIcon: ({ color, size }) => {
+          tabBarIcon: ({ color }) => {
             return (
-              <MaterialIcons name="quiz" size={size} color={color}></MaterialIcons>
+              <MaterialIcons
+                name="quiz"
+                size={iconSize}
+                color={color}
+              ></MaterialIcons>
             );
           },
         }}
@@ -93,13 +125,18 @@ const TabNavigator = () => {
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
+  const drawerIconSize = 20;
   return (
     <Drawer.Navigator>
       <Drawer.Screen
         name="Module 5 Project"
         options={{
-          drawerIcon: ({ focused, color, size }) => (
-            <MaterialCommunityIcons name="menu" size={size} color={color} />
+          drawerIcon: ({ focused, color }) => (
+            <MaterialCommunityIcons
+              name="menu"
+              size={drawerIconSize}
+              color={color}
+            />
           ),
         }}
       >
@@ -109,8 +146,14 @@ const DrawerNavigator = () => {
         name="Moments "
         component={Moments}
         options={{
-          drawerIcon: ({ focused, color, size }) => {
-            return <Fontisto name="photograph" size={size} color={color} />;
+          drawerIcon: ({ focused, color }) => {
+            return (
+              <Fontisto
+                name="photograph"
+                size={drawerIconSize}
+                color={color}
+              />
+            );
           },
         }}
       />
@@ -118,8 +161,14 @@ const DrawerNavigator = () => {
         name="Johnny"
         component={SampleProfile}
         options={{
-          drawerIcon: ({ focused, color, size }) => {
-            return <Fontisto name="calendar" size={size} color={color} />;
+          drawerIcon: ({ focused, color }) => {
+            return (
+              <Fontisto
+                name="calendar"
+                size={drawerIconSize}
+                color={color}
+              />
+            );
           },
         }}
       />
@@ -127,8 +176,14 @@ const DrawerNavigator = () => {
         name="Joseph"
         component={SampleProfile}
         options={{
-          drawerIcon: ({ focused, color, size }) => {
-            return <MaterialIcons name="add-task" size={size} color={color} />;
+          drawerIcon: ({ focused, color }) => {
+            return (
+              <MaterialIcons
+                name="add-task"
+                size={drawerIconSize}
+                color={color}
+              />
+            );
           },
         }}
       />
@@ -136,18 +191,34 @@ const DrawerNavigator = () => {
         name="Manyu"
         component={SampleProfile}
         options={{
-          drawerIcon: ({ focused, color, size }) => {
-            return <Fontisto name="compass" size={size} color={color} />;
+          drawerIcon: ({ focused, color }) => {
+            return (
+              <Fontisto
+                name="compass"
+                size={drawerIconSize}
+                color={color}
+              />
+            );
           },
         }}
       />
       <Drawer.Screen
         name="Andrew"
-        component={SampleProfile}
+        component={AndrewProfile}
         options={{
-          drawerIcon: ({ focused, color, size }) => {
-            return <MaterialIcons name="quiz" size={size} color={color} />;
+          drawerIcon: ({ focused, color, size }) => (
+            <FontAwesome
+              name="user-secret"
+              size={size}
+              color={color}
+            />
+          ),
+          headerStyle: {
+            backgroundColor: "#B2B2B2",
+            elevation: 0,
+            shadowOpacity: 0, // Remove shadow on iOS
           },
+          headerTintColor: "#000", // Optional: Change text/icon color
         }}
       />
     </Drawer.Navigator>
@@ -171,7 +242,10 @@ export default function App() {
           name="CameraHome"
           component={CameraHomeScreen}
         ></Stack.Screen>
-        <Stack.Screen name="Camera" component={CameraScreen}></Stack.Screen>
+        <Stack.Screen
+          name="Camera"
+          component={CameraScreen}
+        ></Stack.Screen>
         <Stack.Screen
           name="CameraProfile"
           component={CameraProfileScreen}
