@@ -93,57 +93,62 @@ const TriviaGame = ({ navigation }) => {
   }, []);
 
   // Exit if there is no question or game is over
-  useEffect(() => {
-    if (shuffledQuestions.length === 0) return;
+  useFocusEffect(
+    React.useCallback(() => {
+      if (shuffledQuestions.length === 0) return;
 
-    if (gameOver) {
-      Accelerometer.removeAllListeners(); // Stop accelerometer when game is over
-      return;
-    }
-
-    // Set up listener for accelerometer data and manage all different tilt positions / states
-    const subscription = Accelerometer.addListener(({ x }) => {
-      // When device is in neutral position and we need to reset
-      if (Math.abs(x) < 0.2 && needsReset) {
-        setNeedsReset(false);
-        setTiltBackground(null);
-
-        // Only advance to next question when device returns to neutral
-        if (currentQuestionIndex < shuffledQuestions.length - 1) {
-          setCurrentQuestionIndex((prev) => prev + 1);
-        } else {
-          setGameOver(true);
-        }
-
-        setFeedback(null);
-        setIsProcessingAnswer(false);
-        setLastTiltDirection(null);
+      if (gameOver) {
+        Accelerometer.removeAllListeners(); // Stop accelerometer when game is over
+        return;
       }
-      // When not processing an answer nor waiting for the device to return to neutral, detect new tilts
-      else if (!isProcessingAnswer && !needsReset) {
-        if (x > 0.4 && lastTiltDirection !== "right") {
-          setTiltBackground("#BD6FF5");
-          checkAnswer("B");
-          setLastTiltDirection("right");
-        } else if (x < -0.4 && lastTiltDirection !== "left") {
-          setTiltBackground("#F34D4D");
-          checkAnswer("A");
-          setLastTiltDirection("left");
-        }
-      }
-    });
 
-    // Update frequency set to 400ms to balance responsiveness and performance
-    Accelerometer.setUpdateInterval(400);
-    return () => subscription.remove();
-  }, [
-    currentQuestionIndex,
-    shuffledQuestions,
-    isProcessingAnswer,
-    needsReset,
-    lastTiltDirection,
-    // gameOver,
-  ]);
+      // Set up listener for accelerometer data and manage all different tilt positions / states
+      const subscription = Accelerometer.addListener(({ x }) => {
+        // When device is in neutral position and we need to reset
+        if (Math.abs(x) < 0.2 && needsReset) {
+          setNeedsReset(false);
+          setTiltBackground(null);
+
+          // Only advance to next question when device returns to neutral
+          if (currentQuestionIndex < shuffledQuestions.length - 1) {
+            setCurrentQuestionIndex((prev) => prev + 1);
+          } else {
+            setGameOver(true);
+          }
+
+          setFeedback(null);
+          setIsProcessingAnswer(false);
+          setLastTiltDirection(null);
+        }
+        // When not processing an answer nor waiting for the device to return to neutral, detect new tilts
+        else if (!isProcessingAnswer && !needsReset) {
+          if (x > 0.4 && lastTiltDirection !== "right") {
+            setTiltBackground("#BD6FF5");
+            checkAnswer("B");
+            setLastTiltDirection("right");
+          } else if (x < -0.4 && lastTiltDirection !== "left") {
+            setTiltBackground("#F34D4D");
+            checkAnswer("A");
+            setLastTiltDirection("left");
+          }
+        }
+      });
+
+      // Update frequency set to 400ms to balance responsiveness and performance
+      Accelerometer.setUpdateInterval(400);
+      return () => {
+        subscription.remove();
+        Accelerometer.removeAllListeners();
+      };
+    }, [
+      currentQuestionIndex,
+      shuffledQuestions,
+      isProcessingAnswer,
+      needsReset,
+      lastTiltDirection,
+      // gameOver,
+    ])
+  );
 
   // Play game, update scores and attempts
   const checkAnswer = (selectedAnswer) => {
