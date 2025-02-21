@@ -12,7 +12,7 @@ import CameraHomeScreen from "./screens/tabScreens/CameraHomeScreen";
 import CameraScreen from "./screens/tabScreens/CameraScreen";
 import CameraProfileScreen from "./screens/tabScreens/CameraProfileScreen";
 import Fontisto from "@expo/vector-icons/Fontisto";
-import Moments from "./screens/drawerScreens/Moments";
+import BinduProfile from "./screens/drawerScreens/BinduProfile";
 import TriviaGame from "./screens/tabScreens/triviaGame/TriviaGame";
 import CalendarScreen from "./screens/tabScreens/CalendarScreen";
 import CompassScreen from "./screens/tabScreens/CompassScreen";
@@ -143,8 +143,8 @@ const DrawerNavigator = () => {
         {(props) => <TabNavigator {...props} />}
       </Drawer.Screen>
       <Drawer.Screen
-        name="Moments "
-        component={Moments}
+        name="Bindu"
+        component={BinduProfile}
         options={{
           drawerIcon: ({ focused, color }) => {
             return (
