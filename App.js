@@ -49,14 +49,41 @@ const TabNavigator = () => {
           },
         }}
       />
-      <Tab.Screen name="Bindu" component={SampleTabScreen} />
-      <Tab.Screen name="Johnny" component={CalendarScreen} />
-      <Tab.Screen name="Joseph" component={SampleTabScreen} />
-      <Tab.Screen name="Manyu" component={CompassScreen} />
+      <Tab.Screen name="Calendar" component={CalendarScreen} 
+        options={{
+          tabBarIcon: ({ color, size }) => {
+            return (
+              <Fontisto name="calendar" size={size} color={color}></Fontisto>
+            );
+          },
+        }}/>
+      <Tab.Screen name="Task" component={SampleTabScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => {
+            return (
+              <MaterialIcons name="add-task" size={size} color={color}></MaterialIcons>
+            );
+          },
+        }} />
+      <Tab.Screen name="Compass" component={CompassScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => {
+            return (
+              <Fontisto name="compass-alt" size={size} color={color}></Fontisto>
+            );
+          },
+        }} />
       <Tab.Screen
         style={styles.tabIconTrivia}
         name="Quiz"
         component={TriviaGame}
+        options={{
+          tabBarIcon: ({ color, size }) => {
+            return (
+              <MaterialIcons name="quiz" size={size} color={color}></MaterialIcons>
+            );
+          },
+        }}
       />
     </Tab.Navigator>
   );
@@ -92,7 +119,7 @@ const DrawerNavigator = () => {
         component={SampleProfile}
         options={{
           drawerIcon: ({ focused, color, size }) => {
-            return <MaterialIcons name="article" size={size} color={color} />;
+            return <Fontisto name="calendar" size={size} color={color} />;
           },
         }}
       />
@@ -101,7 +128,7 @@ const DrawerNavigator = () => {
         component={SampleProfile}
         options={{
           drawerIcon: ({ focused, color, size }) => {
-            return <MaterialIcons name="article" size={size} color={color} />;
+            return <MaterialIcons name="add-task" size={size} color={color} />;
           },
         }}
       />
@@ -110,7 +137,7 @@ const DrawerNavigator = () => {
         component={SampleProfile}
         options={{
           drawerIcon: ({ focused, color, size }) => {
-            return <MaterialIcons name="article" size={size} color={color} />;
+            return <Fontisto name="compass" size={size} color={color} />;
           },
         }}
       />
@@ -119,7 +146,7 @@ const DrawerNavigator = () => {
         component={SampleProfile}
         options={{
           drawerIcon: ({ focused, color, size }) => {
-            return <MaterialIcons name="article" size={size} color={color} />;
+            return <MaterialIcons name="quiz" size={size} color={color} />;
           },
         }}
       />
