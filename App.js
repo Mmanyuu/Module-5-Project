@@ -17,6 +17,7 @@ import CalendarScreen from "./screens/tabScreens/CalendarScreen";
 import CompassScreen from "./screens/tabScreens/CompassScreen";
 import AndrewProfile from "./screens/drawerScreens/AndrewProfile";
 import ManyuProfile from "./screens/drawerScreens/ManyuProfile";
+import JohnnyProfile from "./screens/drawerScreens/JohnnyProfile";
 import SampleProfile from "./screens/drawerScreens/SampleProfile";
 // CREATE TAB NAVIGATION
 const Tab = createBottomTabNavigator();
@@ -159,7 +160,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name="Johnny"
-        component={ManyuProfile}
+        component={JohnnyProfile}
         options={{
           drawerIcon: ({ focused, color }) => {
             return (
@@ -189,7 +190,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name="Manyu"
-        component={SampleProfile}
+        component={ManyuProfile}
         options={{
           drawerIcon: ({ focused, color }) => {
             return (
