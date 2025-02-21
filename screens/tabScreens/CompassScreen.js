@@ -1,4 +1,4 @@
-import { Magnetometer } from "expo-sensors"; // Alloq access to device magnetometer to het magnetic field data
+import { Magnetometer } from "expo-sensors"; // Access magnetometer sensor
 import {
   View,
   Text,
@@ -8,52 +8,61 @@ import {
   Animated,
 } from "react-native";
 import { useState, useEffect, useRef } from "react";
-import compassBg from "../../assets/compass_bg.png"; //Compass background image
-import needle from "../../assets/needle.png"; //Needle image
-import * as Location from "expo-location"; //Expo location module to get location of phone
+import compassBg from "../../assets/compass_bg.png"; // Compass background image
+import needle from "../../assets/needle.png"; // Needle image
+import * as Location from "expo-location"; // Location module to get phone location
+
+// Update intervals for the magnetometer
+const UPDATE_INTERVAL_SLOW = 1000;
+const UPDATE_INTERVAL_FAST = 16;
 
 function CompassScreen() {
+  const [{ x, y }, setData] = useState({ x: 0, y: 0 });
+  const [magnetometerSubscription, setMagnetometerSubscription] = useState(null);
+  const [angle, setAngle] = useState(0);
+  const rotateAnim = useRef(new Animated.Value(0)).current;
+  const lastAngle = useRef(0); // Keep track of the last angle to avoid redundant updates
 
-  const [{ x, y }, setData] = useState({ x: 0, y: 0 }); //Storing magnetometer data in x adn y here.
-  const [magnetometerSubscription, setMagnetometerSubscription] = useState(null); //keeps track of magnetometer subcription (whether its active or not)
-  const [angle, setAngle] = useState(0); //Storing the current angle of the compass
-  const rotateAnim = useRef(new Animated.Value(0)).current; //rotateAnim is a reference to an animated value used for rotating the needle.
-  const [buttonColor, setButtonColor] = useState("#333");
+  // Set magnetometer update frequency
+  const slowUpdate = () => Magnetometer.setUpdateInterval(UPDATE_INTERVAL_SLOW);
+  const fastUpdate = () => Magnetometer.setUpdateInterval(UPDATE_INTERVAL_FAST);
 
-  //Defining function to set the update interval for the magnetometer
-  const slowUpdate = () => Magnetometer.setUpdateInterval(1000); //1000ms
-  const fastUpdate = () => Magnetometer.setUpdateInterval(16); //16
-
-  //Need to on the magnetometer (i.e. subscribe) and calculate the new angle based on teh x and y values. It will also animates the needle's rotation
+  // Subscribe to magnetometer sensor
   const subscribe = () => {
-    //Adds a listener to the magnetometer to get the magnetic field data
+    unsubscribe(); // Unsubscribe before subscribing again
+
     setMagnetometerSubscription(
       Magnetometer.addListener((result) => {
-        setData(result); //Store the magnetometer data in x and y
-        let newAngle = Math.atan2(result.y, result.x) * (180 / Math.PI);
-        if (newAngle < 0) newAngle += 360;
-        setAngle(newAngle % 720); //Set the angle to the new angle
+        setData(result);
 
-        // Animate rotation smoothly  
-        Animated.timing(rotateAnim, {
-          toValue: newAngle,
-          duration: 200,
-          useNativeDriver: true,
-        }).start();
+        let newAngle = Math.atan2(result.y, result.x) * (180 / Math.PI);
+        if (newAngle < 0) newAngle += 360; // Ensure angle is positive
+        newAngle = newAngle % 360; // Normalize within 0-360
+
+        // Only animate if angle change is significant (avoids jitter)
+        if (Math.abs(newAngle - lastAngle.current) > 1) {
+          lastAngle.current = newAngle; // Update last recorded angle
+
+          rotateAnim.setValue(lastAngle.current); //Reset to prevent full rotation
+          Animated.timing(rotateAnim, {
+            toValue: newAngle,
+            duration: 200,
+            useNativeDriver: true,
+          }).start(() => setAngle(newAngle)); // Set angle after animation
+        }
       })
     );
   };
 
+  // Unsubscribe from magnetometer sensor
   const unsubscribe = () => {
-    magnetometerSubscription?.remove();
-    setMagnetometerSubscription(null);
+    if (magnetometerSubscription) {
+      magnetometerSubscription.remove();
+      setMagnetometerSubscription(null);
+    }
   };
 
-  useEffect(() => {
-    subscribe();
-    return () => unsubscribe();
-  }, []);
-
+  // Request location permission once when the component mounts
   useEffect(() => {
     const requestPermissions = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -63,56 +72,56 @@ function CompassScreen() {
         subscribe();
       }
     };
+
     requestPermissions();
-    return () => unsubscribe(); //Unsubscribe from the magnetometer when the component unmounts
+
+    return () => unsubscribe();
   }, []);
 
+  // Smooth rotation animation
   const rotateInterpolate = rotateAnim.interpolate({
-    inputRange: [0, 360, 720],
-    outputRange: ["0deg", "360deg", "720deg"],
+    inputRange: [0, 360],
+    outputRange: ["0deg", "360deg"],
   });
 
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Compass</Text>
 
-      {/* Compass Container */}
+      {/* Compass Dial & Needle */}
       <View style={styles.compassContainer}>
         <Image source={compassBg} style={styles.compassBackground} />
         <Animated.Image
           source={needle}
-          style={[
-            styles.needle,
-            { transform: [{ rotate: rotateInterpolate }] },
-          ]}
+          style={[styles.needle, { transform: [{ rotate: rotateInterpolate }] }]}
         />
       </View>
 
+      {/* Angle Display */}
       <Text style={styles.angleText}>{angle.toFixed(2)}°</Text>
 
-      {/* Buttons */}
+      {/* Control Buttons */}
       <View style={styles.buttonContainer}>
-
         <TouchableOpacity
-          onPress={magnetometerSubscription ? unsubscribe : subscribe}
+          onPress={() => {
+            if (magnetometerSubscription) {
+              unsubscribe();
+            } else {
+              subscribe();
+            }
+          }}
           style={styles.button}
         >
           <Text style={styles.buttonText}>
             {magnetometerSubscription ? "Stop" : "Start"}
           </Text>
         </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={slowUpdate}
-          style={[styles.button, styles.middleButton]}
-        >
+        <TouchableOpacity onPress={slowUpdate} style={[styles.button, styles.middleButton]}>
           <Text style={styles.buttonText}>Slow</Text>
         </TouchableOpacity>
-
         <TouchableOpacity onPress={fastUpdate} style={styles.button}>
           <Text style={styles.buttonText}>Fast</Text>
         </TouchableOpacity>
-
       </View>
     </View>
   );
