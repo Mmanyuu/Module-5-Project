@@ -39,6 +39,7 @@ const TabNavigator = () => {
           position: "absolute",
           elevation: 0, // Remove shadow on Android
           shadowOpacity: 0, // Remove shadow on iOS
+          borderTopWidth: 0, // Remove bottom tab top line
         },
       })}
     >
