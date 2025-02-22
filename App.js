@@ -6,8 +6,6 @@ import styles from "./styles/styles";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import SampleTabScreen from "./screens/tabScreens/SampleTabScreen";
-import SampleProfile from "./screens/drawerScreens/SampleProfile";
 import CameraHomeScreen from "./screens/tabScreens/CameraHomeScreen";
 import CameraScreen from "./screens/tabScreens/CameraScreen";
 import CameraProfileScreen from "./screens/tabScreens/CameraProfileScreen";
@@ -17,7 +15,10 @@ import TriviaGame from "./screens/tabScreens/triviaGame/TriviaGame";
 import CalendarScreen from "./screens/tabScreens/CalendarScreen";
 import CompassScreen from "./screens/tabScreens/CompassScreen";
 import AndrewProfile from "./screens/drawerScreens/AndrewProfile";
+import ManyuProfile from "./screens/drawerScreens/ManyuProfile";
 import JohnnyProfile from "./screens/drawerScreens/JohnnyProfile";
+import ToDoList from "./screens/tabScreens/ToDoList";
+import JosephProfile from "./screens/drawerScreens/JosephProfile";
 
 // CREATE TAB NAVIGATION
 const Tab = createBottomTabNavigator();
@@ -75,7 +76,7 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Task"
-        component={SampleTabScreen}
+        component={ToDoList}
         options={{
           tabBarIcon: ({ color }) => {
             return (
@@ -176,7 +177,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name="Joseph"
-        component={SampleProfile}
+        component={JosephProfile}
         options={{
           drawerIcon: ({ focused, color }) => {
             return (
@@ -191,7 +192,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name="Manyu"
-        component={SampleProfile}
+        component={ManyuProfile}
         options={{
           drawerIcon: ({ focused, color }) => {
             return (

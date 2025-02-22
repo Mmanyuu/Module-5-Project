@@ -92,7 +92,7 @@ const TriviaGame = ({ navigation }) => {
     };
   }, []);
 
-  // Exit if there is no question or game is over
+  // Exit if there is no question, game is over or user navigate away from page
   useFocusEffect(
     React.useCallback(() => {
       if (shuffledQuestions.length === 0) return;
