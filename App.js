@@ -19,6 +19,7 @@ import AndrewProfile from "./screens/drawerScreens/AndrewProfile";
 import ManyuProfile from "./screens/drawerScreens/ManyuProfile";
 import JohnnyProfile from "./screens/drawerScreens/JohnnyProfile";
 import SampleProfile from "./screens/drawerScreens/SampleProfile";
+import ToDoList from "./screens/tabScreens/ToDoList";
 
 
 // CREATE TAB NAVIGATION
@@ -76,7 +77,7 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Task"
-        component={SampleTabScreen}
+        component={ToDoList}
         options={{
           tabBarIcon: ({ color }) => {
             return (
