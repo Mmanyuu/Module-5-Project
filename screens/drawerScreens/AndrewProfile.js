@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
   headerText: {
     fontFamily: "ChakraPetchBold",
     fontSize: 18,
-
     padding: 14,
   },
   profileContainer: {

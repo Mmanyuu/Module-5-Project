@@ -6,7 +6,6 @@ import styles from "./styles/styles";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import SampleTabScreen from "./screens/tabScreens/SampleTabScreen";
 import CameraHomeScreen from "./screens/tabScreens/CameraHomeScreen";
 import CameraScreen from "./screens/tabScreens/CameraScreen";
 import CameraProfileScreen from "./screens/tabScreens/CameraProfileScreen";
@@ -18,9 +17,8 @@ import CompassScreen from "./screens/tabScreens/CompassScreen";
 import AndrewProfile from "./screens/drawerScreens/AndrewProfile";
 import ManyuProfile from "./screens/drawerScreens/ManyuProfile";
 import JohnnyProfile from "./screens/drawerScreens/JohnnyProfile";
-import SampleProfile from "./screens/drawerScreens/SampleProfile";
 import ToDoList from "./screens/tabScreens/ToDoList";
-
+import JosephProfile from "./screens/drawerScreens/JosephProfile";
 
 // CREATE TAB NAVIGATION
 const Tab = createBottomTabNavigator();
@@ -42,6 +40,7 @@ const TabNavigator = () => {
           position: "absolute",
           elevation: 0, // Remove shadow on Android
           shadowOpacity: 0, // Remove shadow on iOS
+          borderTopWidth: 0, // Remove bottom tab top line
         },
       })}
     >
@@ -178,7 +177,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name="Joseph"
-        component={SampleProfile}
+        component={JosephProfile}
         options={{
           drawerIcon: ({ focused, color }) => {
             return (
